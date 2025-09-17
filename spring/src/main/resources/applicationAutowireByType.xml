@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="
+        http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <!-- bean definitions here -->
+    <bean id="specificatiomByType" class="com.example.autowire.type.Specification">
+        <property name="make" value="Scorpio"/>
+        <property name="model" value="S 17"/>
+    </bean>
+
+<!--    <bean id="specification1" class="com.example.autowire.type.Specification">-->
+<!--        <property name="make" value="Scorpio 1"/>-->
+<!--        <property name="model" value="S 17 a"/>-->
+<!--    </bean>-->
+
+    <bean id="myCar" class="com.example.autowire.type.Car" autowire="byType" />
+
+
+</beans>
