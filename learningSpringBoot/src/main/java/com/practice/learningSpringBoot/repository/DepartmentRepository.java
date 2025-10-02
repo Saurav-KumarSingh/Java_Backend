@@ -10,5 +10,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 @Repository
 public interface DepartmentRepository extends JpaRepository<Department,Long> {
 
+    public Department findByDepartmentName(String departmentName);
 
 }
