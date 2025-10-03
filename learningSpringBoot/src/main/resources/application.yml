@@ -1,0 +1,15 @@
+spring:
+  application:
+    name: learningSpringBoot
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    password: Saurav@2999
+    url: jdbc:mysql://localhost:3306/testdb?useSSL=false&serverTimezone=UTC
+    username: root
+  jpa:
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQL8Dialect
+    show-sql: true
