@@ -3,7 +3,6 @@ package com.practice.learningSpringBoot.service;
 import com.practice.learningSpringBoot.entity.Department;
 import com.practice.learningSpringBoot.repository.DepartmentRepository;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,7 +12,7 @@ import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
-class DepartmentServiceImplTest {
+class DepartmentServiceTest {
 
     @Autowired
     private DepartmentService departmentService;
