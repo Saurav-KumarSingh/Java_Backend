@@ -12,7 +12,6 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-
 @Table(name = "student_tbl",
         uniqueConstraints = @UniqueConstraint(
                 name = "email_unique",
@@ -40,8 +39,7 @@ public class Student {
             unique = true
     )  // to create column name as you want
     private String emailId;
-    private String guardianName;
 
-    private String guardianEmail;
-    private String guardianMobile;
+    @Embedded Guardian guardian;
+
 }
