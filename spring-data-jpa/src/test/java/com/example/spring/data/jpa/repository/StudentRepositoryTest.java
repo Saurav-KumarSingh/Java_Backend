@@ -77,6 +77,13 @@ class StudentRepositoryTest {
         System.out.println(student);
     }
 
+    @Test
+    public void printAllStudentByGuardianEmail(){
+        List<Student> studentList=studentRepository.findByGuardianEmail("ravindra@gmail.com");
+
+        System.out.println(studentList);
+    }
+
 
 
 }
