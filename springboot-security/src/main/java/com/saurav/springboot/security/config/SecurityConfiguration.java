@@ -29,12 +29,13 @@ public class SecurityConfiguration {
         return httpSecurity
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(registry->{
-           registry.requestMatchers("/home","/register/**").permitAll();
+           registry.requestMatchers("/home","/register/**","/login").permitAll();
            registry.requestMatchers("/admin/**").hasRole("ADMIN");
            registry.requestMatchers("/user/**").hasAnyRole("USER","ADMIN");
            registry.anyRequest().authenticated();
         })
-                .formLogin(formLogin->formLogin.permitAll())
+                .formLogin(AbstractHttpConfigurer::disable) // disable default Spring login form
+                .httpBasic(AbstractHttpConfigurer::disable) // disable basic auth
                 .build();
     }
 
@@ -56,6 +57,7 @@ public class SecurityConfiguration {
     @Bean
     public UserDetailsService userDetailsService(){
         return myUserService;
+
     }
 
     @Bean
