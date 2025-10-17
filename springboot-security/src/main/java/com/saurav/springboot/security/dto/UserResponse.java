@@ -9,4 +9,5 @@ public class UserResponse {
     private String message;
     private String userName;
     private String role;
+    private String token;
 }

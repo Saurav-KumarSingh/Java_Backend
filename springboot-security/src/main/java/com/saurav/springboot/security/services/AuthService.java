@@ -5,6 +5,7 @@ import com.saurav.springboot.security.dto.SignupRequest;
 import com.saurav.springboot.security.dto.UserResponse;
 import com.saurav.springboot.security.entity.MyUser;
 import com.saurav.springboot.security.repository.MyUserRepository;
+import com.saurav.springboot.security.security.JwtUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -20,11 +21,13 @@ public class AuthService {
     @Autowired
     private PasswordEncoder passwordEncoder;
 
-    public UserResponse registerUser(SignupRequest userRequest) {
+    @Autowired
+    private JwtUtils jwtUtils; // Add this
 
+    public UserResponse registerUser(SignupRequest userRequest) {
         // Check if username exists
         if (myUserRepository.findByUserName(userRequest.getUserName()).isPresent()) {
-            return new UserResponse("Username already exists!", userRequest.getUserName(), userRequest.getRole());
+            return new UserResponse("Username already exists!", userRequest.getUserName(), userRequest.getRole(), null);
         }
 
         // Save new user
@@ -35,24 +38,30 @@ public class AuthService {
 
         myUserRepository.save(user);
 
-        return new UserResponse("User registered successfully!", user.getUserName(), user.getRole());
+        // Generate JWT token after registration
+        String token = jwtUtils.generateToken(user.getUserName(), user.getRole());
+
+        return new UserResponse("User registered successfully!", user.getUserName(), user.getRole(), token);
     }
 
     public UserResponse loginUser(LoginRequest userRequest) {
         Optional<MyUser> userOpt = myUserRepository.findByUserName(userRequest.getUserName());
 
         if (userOpt.isEmpty()) {
-            return new UserResponse("User not found!", userRequest.getUserName(), null);
+            return new UserResponse("User not found!", userRequest.getUserName(), null, null);
         }
 
         MyUser user = userOpt.get();
 
         // Check password (BCrypt)
         if (!passwordEncoder.matches(userRequest.getPassword(), user.getPassword())) {
-            return new UserResponse("Invalid password!", userRequest.getUserName(), null);
+            return new UserResponse("Invalid password!", user.getUserName(), null, null);
         }
 
+        // Generate JWT token - UNCOMMENT and use this
+        String token = jwtUtils.generateToken(user.getUserName(), user.getRole());
+
         // Login successful
-        return new UserResponse("Login successful!", user.getUserName(), user.getRole());
+        return new UserResponse("Login successful!", user.getUserName(), user.getRole(), token);
     }
 }
